@@ -1,0 +1,18 @@
+---
+description: Présenter les captures de projets en visuels groupés, comme Smart Bell
+alwaysApply: true
+---
+
+# Captures de projets
+
+Chaque projet s'affiche avec des visuels groupés, pas une miniature par capture.
+
+- Une capture par page ou par écran. Ne pas multiplier les scrolls d'une même page.
+- Regrouper les captures par trois, côte à côte, dans une image 1600×900.
+- Fond `#ECEAF4`, cartes 16:9 aux coins arrondis et ombre légère. Référence : `public/assets/projects/smart-bell/ecrans.webp`.
+- S'il en reste une ou deux, les placer dans le même type de composition. Au-delà de trois, ouvrir un second visuel.
+- Dans `src/config/portfolio.ts` : `fit: 'contain'`, et une légende qui nomme les écrans.
+- Une fois le visuel composé, retirer les fichiers individuels de la galerie.
+- N'utiliser que des captures réelles (dépôt, appli lancée, ou fichiers envoyés). Ne pas inventer d'écran.
+
+Quand l'utilisateur envoie de nouvelles photos de projet, appliquer ce montage avant de les publier dans la galerie.
