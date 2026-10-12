@@ -1,9 +1,11 @@
-import { Mail, MessageCircle, Phone, Send } from 'lucide-react'
+import type { IconDefinition } from '@fortawesome/free-brands-svg-icons'
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp'
+import { Mail, Phone, Send, type LucideIcon } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { phoneHref, portfolio, whatsappHref } from '../config/portfolio'
 import { Button } from '../components/ui/Button'
 import { SectionHeading } from '../components/ui/SectionHeading'
-import { SocialLinks } from '../components/ui/SocialLinks'
+import { BrandIcon, SocialLinks } from '../components/ui/SocialLinks'
 
 const endpoint =
   import.meta.env.VITE_CONTACT_ENDPOINT?.trim() || portfolio.contact.formEndpoint.trim()
@@ -33,6 +35,24 @@ function validate(values: FormState): FieldErrors {
   return errors
 }
 
+function ContactGlyph({
+  icon,
+  brand,
+}: {
+  icon: LucideIcon | IconDefinition
+  brand: boolean
+}) {
+  if (brand) {
+    return (
+      <span className="inline-flex text-[18px] leading-none">
+        <BrandIcon icon={icon as IconDefinition} />
+      </span>
+    )
+  }
+  const Glyph = icon as LucideIcon
+  return <Glyph size={18} aria-hidden />
+}
+
 export function Contact() {
   const [values, setValues] = useState<FormState>({
     name: '',
@@ -45,7 +65,13 @@ export function Contact() {
   const [feedback, setFeedback] = useState('')
 
   const { contact } = portfolio
-  const contactLinks = [
+  const contactLinks: {
+    href: string
+    label: string
+    external: boolean
+    icon: LucideIcon | IconDefinition
+    brand: boolean
+  }[] = [
     {
       href: contact.email
         ? `mailto:${contact.email}?subject=${encodeURIComponent('Contact portfolio Kim Mass')}`
@@ -53,9 +79,10 @@ export function Contact() {
       label: contact.email,
       icon: Mail,
       external: false,
+      brand: false,
     },
-    { href: phoneHref(contact.phone), label: contact.phone, icon: Phone, external: false },
-    { href: whatsappHref(contact.whatsapp), label: 'WhatsApp', icon: MessageCircle, external: true },
+    { href: phoneHref(contact.phone), label: contact.phone, icon: Phone, external: false, brand: false },
+    { href: whatsappHref(contact.whatsapp), label: 'WhatsApp', icon: faWhatsapp, external: true, brand: true },
   ].filter((link) => link.href.trim())
 
   const recipient = contact.email.trim()
@@ -122,7 +149,7 @@ export function Contact() {
                     {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     className="inline-flex items-center gap-2.5 text-text hover:text-accent"
                   >
-                    <link.icon size={18} aria-hidden />
+                    <ContactGlyph icon={link.icon} brand={link.brand} />
                     {link.label}
                   </a>
                 </li>

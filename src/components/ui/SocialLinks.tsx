@@ -2,13 +2,14 @@ import type { IconDefinition } from '@fortawesome/free-brands-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram'
 import { faLinkedinIn } from '@fortawesome/free-brands-svg-icons/faLinkedinIn'
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp'
 import { faXTwitter } from '@fortawesome/free-brands-svg-icons/faXTwitter'
-import { portfolio } from '../../config/portfolio'
+import { portfolio, whatsappHref } from '../../config/portfolio'
 import { cn } from '../../lib/cn'
 
 const { socials } = portfolio
 
-function BrandIcon({ icon }: { icon: IconDefinition }) {
+export function BrandIcon({ icon }: { icon: IconDefinition }) {
   const [width, height, , , path] = icon.icon
   return (
     <svg viewBox={`0 0 ${width} ${height}`} className="h-[1em] w-auto" fill="currentColor" aria-hidden>
@@ -24,6 +25,7 @@ const links: { href: string; label: string; icon: IconDefinition }[] = [
   { href: socials.linkedin, label: 'LinkedIn', icon: faLinkedinIn },
   { href: socials.instagram, label: 'Instagram', icon: faInstagram },
   { href: socials.x, label: 'X (Twitter)', icon: faXTwitter },
+  { href: whatsappHref(portfolio.contact.whatsapp), label: 'WhatsApp', icon: faWhatsapp },
 ].filter((link) => link.href.trim())
 
 export function SocialLinks({ size = 'md', className }: { size?: 'sm' | 'md'; className?: string }) {
