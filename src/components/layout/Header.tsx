@@ -24,8 +24,17 @@ export function Header() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(false)
     }
+    const onResize = () => {
+      if (window.matchMedia('(min-width: 1024px)').matches) setOpen(false)
+    }
+    document.body.style.overflow = 'hidden'
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener('resize', onResize)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('resize', onResize)
+    }
   }, [open])
 
   const go = (id: string) => {
@@ -34,11 +43,11 @@ export function Header() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-bg/92 backdrop-blur-md">
-      <div className="page-shell flex h-[68px] items-center justify-between gap-4">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-bg/92 pt-[env(safe-area-inset-top,0px)] backdrop-blur-md">
+      <div className="page-shell grid h-[var(--header-h)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
         <Logo onClick={() => go('accueil')} />
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Principale">
+        <nav className="hidden min-w-0 items-center justify-end gap-0.5 lg:flex xl:gap-1" aria-label="Principale">
           {links.map((link) => (
             <button
               key={link.id}
@@ -46,8 +55,10 @@ export function Header() {
               onClick={() => go(link.id)}
               aria-current={active === link.id ? 'true' : undefined}
               className={cn(
-                'rounded-[5px] px-3 py-2 font-sans text-[15px] font-medium transition-colors',
-                active === link.id ? 'text-accent' : 'text-muted hover:text-text',
+                'relative rounded-[5px] px-2.5 py-2 font-sans text-[14.5px] font-medium transition-colors xl:px-3 xl:text-[15px]',
+                active === link.id
+                  ? 'text-text after:absolute after:inset-x-2.5 after:bottom-1 after:h-px after:bg-accent xl:after:inset-x-3'
+                  : 'text-muted hover:text-text',
               )}
             >
               {link.label}
@@ -55,11 +66,11 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-1">
+        <div className="flex shrink-0 items-center gap-1">
           <ThemeToggle />
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-[5px] text-text hover:bg-surface md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-[5px] text-text hover:bg-surface lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
@@ -71,15 +82,20 @@ export function Header() {
       </div>
 
       {open ? (
-        <nav id="mobile-nav" className="border-t border-border bg-bg md:hidden" aria-label="Mobile">
-          <ul className="page-shell flex flex-col py-3">
+        <nav
+          id="mobile-nav"
+          className="max-h-[calc(100dvh-var(--header-h)-env(safe-area-inset-top,0px))] overflow-y-auto border-t border-border bg-bg lg:hidden"
+          aria-label="Mobile"
+        >
+          <ul className="page-shell flex flex-col py-2 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))]">
             {links.map((link) => (
-              <li key={link.id}>
+              <li key={link.id} className="border-b border-border/70">
                 <button
                   type="button"
                   onClick={() => go(link.id)}
+                  aria-current={active === link.id ? 'true' : undefined}
                   className={cn(
-                    'w-full py-3 text-left font-display text-[1.7rem] font-semibold tracking-[-0.02em]',
+                    'flex min-h-14 w-full items-center text-left font-display text-[1.65rem] font-semibold tracking-[-0.02em]',
                     active === link.id ? 'text-accent' : 'text-text',
                   )}
                 >
@@ -87,7 +103,7 @@ export function Header() {
                 </button>
               </li>
             ))}
-            <li className="pb-3 pt-4">
+            <li className="pt-5">
               <Button variant="primary" className="w-full" onClick={() => go('contact')}>
                 Discutons d&apos;un projet
               </Button>

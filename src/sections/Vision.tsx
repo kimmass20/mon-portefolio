@@ -15,17 +15,17 @@ const pillars = [
 
 export function Vision() {
   return (
-    <section id="vision" className="scroll-mt-20 py-24 sm:py-32" aria-labelledby="vision-title">
+    <section id="vision" className="section" aria-labelledby="vision-title">
       <div className="page-shell">
         <p className="mb-6 font-serif text-xl italic text-accent">Vision</p>
         <h2
           id="vision-title"
-          className="display-balance max-w-5xl font-serif text-[2.3rem] font-normal leading-[1.1] tracking-[-0.015em] text-text sm:text-6xl lg:text-[4.4rem]"
+          className="display-balance max-w-5xl font-serif text-[clamp(2rem,4.2vw,3.5rem)] font-normal leading-[1.12] tracking-[-0.015em] text-text"
         >
           La technologie n&apos;a de valeur que lorsqu&apos;elle répond à quelque chose.
         </h2>
 
-        <div className="mt-16 grid gap-10 md:grid-cols-3 md:gap-8">
+        <div className="stack-gap grid gap-8 md:grid-cols-3 md:gap-8">
           {pillars.map((p) => (
             <div key={p.title} className="border-t border-border pt-6">
               <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] text-text">
@@ -36,7 +36,7 @@ export function Vision() {
           ))}
         </div>
 
-        <p className="body-pretty mt-16 max-w-2xl border-l-2 border-brass pl-6 text-lg italic leading-[1.7] text-muted">
+        <p className="body-pretty stack-gap max-w-2xl border-l-2 border-brass pl-6 text-lg italic leading-[1.7] text-muted">
           La Data Science et l&apos;analyse de données font partie de mes objectifs
           d&apos;évolution : mieux exploiter les données pour éclairer des décisions produit, une
           fois les bases statistiques et les outils consolidés dans mon parcours.

@@ -105,7 +105,7 @@ export function Projects() {
   const [featured, ...others] = projects
 
   return (
-    <section id="projets" className="scroll-mt-20 py-24 sm:py-32">
+    <section id="projets" className="section">
       <div className="page-shell">
         <SectionHeading
           label="Projets"
@@ -113,7 +113,7 @@ export function Projects() {
           description="Deux plateformes scolaires, une cloche connectée, deux projets académiques et une vitrine en ligne, dont deux projets de la start-up Espoir Compagnie auxquels j’ai contribué côté front-end. Chacun est présenté tel qu’il est aujourd’hui, avec ma part exacte du travail."
         />
 
-        <article className="mt-20" aria-labelledby={`project-${featured.id}`}>
+        <article className="stack-gap" aria-labelledby={`project-${featured.id}`}>
           <ProjectGallery project={featured} />
           <div className="mt-10 grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
@@ -125,7 +125,7 @@ export function Projects() {
           </div>
         </article>
 
-        <div className="mt-24 grid gap-20 border-t-2 border-text pt-14 lg:grid-cols-2 lg:gap-14">
+        <div className="mt-[clamp(3.25rem,6vw,4.5rem)] grid gap-16 border-t-2 border-text pt-[clamp(2.5rem,4vw,3.25rem)] lg:grid-cols-2 lg:gap-x-12 lg:gap-y-16">
           {others.map((project, index) => {
             const spansRow = others.length % 2 === 1 && index === others.length - 1
 

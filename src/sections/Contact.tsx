@@ -126,7 +126,7 @@ export function Contact() {
     'mt-2 w-full rounded-none border-0 border-b border-text/30 bg-transparent px-0 py-3 font-sans text-[17px] text-text placeholder:text-muted/70 focus:border-accent focus:outline-none'
 
   return (
-    <section id="contact" className="scroll-mt-20 border-t border-border py-24 sm:py-32">
+    <section id="contact" className="section border-t border-border">
       <div className="page-shell">
         <SectionHeading
           label="Contact"
@@ -134,7 +134,7 @@ export function Contact() {
           description="Projet numérique, collaboration ou opportunité professionnelle : la conversation peut commencer ici."
         />
 
-        <div className="mt-16 grid gap-16 lg:grid-cols-12 lg:gap-10">
+        <div className="stack-gap grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-4">
             <p className="max-w-sm font-serif text-2xl italic leading-snug text-text">
               Ouvert aux collaborations sérieuses et aux problèmes intéressants.

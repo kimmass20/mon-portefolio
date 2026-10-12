@@ -18,11 +18,11 @@ const principles = [
 
 export function About() {
   return (
-    <section id="a-propos" className="scroll-mt-20 border-t border-border py-24 sm:py-32">
-      <div className="page-shell grid gap-14 lg:grid-cols-12 lg:gap-10">
+    <section id="a-propos" className="section border-t border-border">
+      <div className="page-shell grid gap-12 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-7">
           <p className="mb-6 font-serif text-xl italic text-accent">À propos</p>
-          <h2 className="display-balance font-serif text-[2.1rem] font-normal leading-[1.15] tracking-[-0.01em] text-text sm:text-5xl sm:leading-[1.1]">
+          <h2 className="display-balance font-serif text-[clamp(1.85rem,3.5vw,2.85rem)] font-normal leading-[1.15] tracking-[-0.01em] text-text">
             Je ne cherche pas à collectionner les technologies. Je cherche à comprendre ce
             qu&apos;elles permettent de créer.
           </h2>

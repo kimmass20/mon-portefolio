@@ -16,12 +16,12 @@ export function SectionHeading({ label, title, description, className, id }: Pro
       ) : null}
       <h2
         id={id}
-        className="display-balance font-display text-[2.6rem] font-semibold leading-[0.98] tracking-[-0.035em] text-text sm:text-6xl lg:text-[4.6rem]"
+        className="display-balance font-display text-[clamp(2rem,4.4vw,3.35rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-text"
       >
         {title}
       </h2>
       {description ? (
-        <p className="body-pretty mt-6 max-w-xl text-lg leading-relaxed text-muted">{description}</p>
+        <p className="body-pretty mt-5 max-w-xl text-lg leading-relaxed text-muted">{description}</p>
       ) : null}
     </header>
   )

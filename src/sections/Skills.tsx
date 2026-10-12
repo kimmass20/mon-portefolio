@@ -22,7 +22,7 @@ const byLevel = levels.map((level) => ({
 
 export function Skills() {
   return (
-    <section id="competences" className="scroll-mt-20 bg-surface py-24 sm:py-32">
+    <section id="competences" className="section bg-surface">
       <div className="page-shell">
         <SectionHeading
           label="Compétences"
@@ -30,7 +30,7 @@ export function Skills() {
           description="Ce portfolio, par exemple, est fait avec React, TypeScript, Vite et Tailwind CSS."
         />
 
-        <div className="mt-16 grid gap-12 md:grid-cols-3 md:gap-8">
+        <div className="stack-gap grid gap-10 md:grid-cols-3 md:gap-8 lg:gap-12">
           {byLevel.map((level) => (
             <section key={level.id} aria-labelledby={`level-${level.id}`}>
               <div className="border-b-2 border-text pb-4">
@@ -46,10 +46,10 @@ export function Skills() {
                 {level.items.map((item) => (
                   <li
                     key={item.name}
-                    className="flex items-baseline justify-between gap-4 border-b border-border py-3"
+                    className="grid gap-0.5 border-b border-border py-3.5"
                   >
                     <span className="font-sans text-[17px] font-medium text-text">{item.name}</span>
-                    <span className="text-right text-[15px] italic text-muted">{item.category}</span>
+                    <span className="text-[14px] italic text-muted">{item.category}</span>
                   </li>
                 ))}
               </ul>

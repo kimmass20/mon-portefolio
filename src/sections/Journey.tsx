@@ -19,8 +19,8 @@ const facts = [
 
 export function Journey() {
   return (
-    <section id="parcours" className="scroll-mt-20 border-t border-border bg-surface py-24 sm:py-32">
-      <div className="page-shell grid gap-14 lg:grid-cols-12 lg:gap-10">
+    <section id="parcours" className="section border-t border-border bg-surface">
+      <div className="page-shell grid gap-12 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-5">
           <SectionHeading label="Parcours" title="Apprendre, construire, recommencer mieux." />
           <p className="body-pretty mt-8 max-w-md text-lg leading-[1.7] text-muted">
