@@ -20,6 +20,7 @@ export function Strings() {
   const reduced = useReducedMotion()
   const svgRef = useRef<SVGSVGElement>(null)
   const pathRefs = useRef<(SVGPathElement | null)[]>([])
+  const edgeRefs = useRef<(SVGPathElement | null)[]>([])
   const vibrations = useRef<(Vibration | null)[]>(TUNING.map(() => null))
   const frame = useRef<number | null>(null)
 
@@ -33,19 +34,24 @@ export function Strings() {
     let running = false
     vibrations.current.forEach((v, i) => {
       const path = pathRefs.current[i]
-      if (!v || !path) return
+      const edge = edgeRefs.current[i]
+      if (!v || !path || !edge) return
       const t = (now - v.start) / 1000
       const decay = Math.exp(-t * 3.2)
       const y = stringY(i)
       if (decay < 0.02) {
-        path.setAttribute('d', flatPath(y))
+        const d = flatPath(y)
+        path.setAttribute('d', d)
+        edge.setAttribute('d', d)
         path.style.stroke = ''
         vibrations.current[i] = null
         return
       }
       running = true
       const offset = v.amp * decay * Math.sin(2 * Math.PI * v.freq * t)
-      path.setAttribute('d', `M0 ${y} Q${v.x} ${y + offset * 2} ${WIDTH} ${y}`)
+      const d = `M0 ${y} Q${v.x} ${y + offset * 2} ${WIDTH} ${y}`
+      path.setAttribute('d', d)
+      edge.setAttribute('d', d)
       path.style.stroke = decay > 0.25 ? 'var(--color-accent)' : ''
     })
     frame.current = running ? requestAnimationFrame(tick) : null
@@ -75,16 +81,31 @@ export function Strings() {
     >
       {TUNING.map((note, i) => {
         const y = stringY(i)
+        const wound = i >= 3
         return (
           <g key={note + i}>
+            <path
+              ref={(el) => {
+                edgeRefs.current[i] = el
+              }}
+              d={flatPath(y)}
+              fill="none"
+              stroke="var(--color-bg)"
+              strokeWidth={wound ? 7 : 5.5}
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+              className="string-draw"
+              style={{ animationDelay: `${i * 70}ms` }}
+            />
             <path
               ref={(el) => {
                 pathRefs.current[i] = el
               }}
               d={flatPath(y)}
               fill="none"
-              stroke="var(--color-string)"
-              strokeWidth={0.8 + i * 0.32}
+              stroke={wound ? 'var(--color-brass)' : 'var(--color-text)'}
+              strokeWidth={wound ? 2.7 : 1.9}
+              strokeLinecap="round"
               vectorEffect="non-scaling-stroke"
               className="string-draw"
               style={{ animationDelay: `${i * 70}ms` }}
