@@ -6,9 +6,9 @@ import {
 import { SectionHeading } from '../components/ui/SectionHeading'
 
 const levels: { id: SkillLevel; note: string }[] = [
-  { id: 'usedInProjects', note: 'Utilisé dans au moins un projet réalisé.' },
-  { id: 'consolidating', note: 'Déjà pratiqué, encore en cours de maîtrise.' },
-  { id: 'learning', note: 'Objectif d’apprentissage, pas encore une compétence.' },
+  { id: 'usedInProjects', note: 'Déjà utilisé dans un projet.' },
+  { id: 'consolidating', note: 'Je le pratique encore pour le tenir mieux.' },
+  { id: 'learning', note: 'Je l’apprends, sans le présenter comme acquis.' },
 ]
 
 const byLevel = levels.map((level) => ({
@@ -26,8 +26,8 @@ export function Skills() {
       <div className="page-shell">
         <SectionHeading
           label="Compétences"
-          title="Classées par usage réel, pas par pourcentage."
-          description="Trois colonnes honnêtes : ce que j’ai déjà utilisé dans mes projets, ce que je consolide, et ce que j’apprends."
+          title="Déjà dans mes projets, ou encore en chemin."
+          description="Ce portfolio, par exemple, est fait avec React, TypeScript, Vite et Tailwind CSS."
         />
 
         <div className="mt-16 grid gap-12 md:grid-cols-3 md:gap-8">

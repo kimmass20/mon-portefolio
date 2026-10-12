@@ -29,6 +29,9 @@ export const skillCategories: SkillCategory[] = [
       { name: 'HTML5', level: 'usedInProjects' },
       { name: 'CSS3', level: 'usedInProjects' },
       { name: 'JavaScript', level: 'usedInProjects' },
+      { name: 'React', level: 'usedInProjects' },
+      { name: 'TypeScript', level: 'usedInProjects' },
+      { name: 'Tailwind CSS', level: 'usedInProjects' },
       { name: 'Bootstrap', level: 'consolidating' },
     ],
   },
@@ -57,6 +60,7 @@ export const skillCategories: SkillCategory[] = [
     items: [
       { name: 'Git', level: 'usedInProjects' },
       { name: 'GitHub', level: 'usedInProjects' },
+      { name: 'Vite', level: 'usedInProjects' },
       { name: 'Visual Studio Code', level: 'usedInProjects' },
       { name: 'Linux', level: 'consolidating' },
       { name: 'Environnements locaux', level: 'usedInProjects' },
