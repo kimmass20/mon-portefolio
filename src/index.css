@@ -150,17 +150,6 @@ body {
   text-decoration-color: var(--color-accent);
 }
 
-.guitar-in {
-  opacity: 0;
-  animation: guitar-in 0.7s ease forwards;
-}
-
-@keyframes guitar-in {
-  to {
-    opacity: 1;
-  }
-}
-
 .string-draw {
   transform-box: view-box;
   transform-origin: 0 0;

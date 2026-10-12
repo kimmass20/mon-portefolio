@@ -18,14 +18,13 @@ export function Hero() {
         <p>{portfolio.identity.level}, UPC</p>
       </div>
 
-      <div className="relative mt-6 sm:mt-8">
+      <div className="relative mt-8 sm:mt-10">
         <Strings />
-        <div className="pointer-events-none absolute inset-0 flex items-center">
-          <div className="page-shell w-full">
-            <h1 className="max-w-full whitespace-nowrap py-[0.06em] font-display text-[clamp(2.55rem,10.2vw,7.5rem)] font-bold leading-[0.84] tracking-[-0.05em] text-text">
-              Kim Mass
-            </h1>
-          </div>
+        <div className="page-shell">
+          <h1 className="pointer-events-none relative max-w-full py-[0.06em] font-display text-[clamp(3.35rem,15vw,8.75rem)] font-bold leading-[0.84] tracking-[-0.05em] text-text">
+            <span className="block sm:inline">Kim</span>{' '}
+            <span className="block sm:ml-[0.08em] sm:inline">Mass</span>
+          </h1>
         </div>
       </div>
 
