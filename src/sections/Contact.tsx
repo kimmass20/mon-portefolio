@@ -106,8 +106,13 @@ export function Contact() {
           _captcha: 'false',
         }),
       })
-      const data = (await res.json().catch(() => null)) as { success?: boolean | string } | null
-      if (!res.ok || data?.success === false || data?.success === 'false') throw new Error('HTTP error')
+      const data = (await res.json().catch(() => null)) as {
+        success?: boolean | string
+        ok?: boolean
+      } | null
+      const accepted = data?.ok === true || data?.success === true || data?.success === 'true'
+      const rejected = data?.ok === false || data?.success === false || data?.success === 'false'
+      if (!res.ok || rejected || !accepted) throw new Error('HTTP error')
       setStatus('success')
       setFeedback('Message envoyé. Il arrive directement dans ma boîte mail.')
       setValues({ name: '', email: '', subject: '', message: '' })

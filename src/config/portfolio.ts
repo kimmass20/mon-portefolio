@@ -105,10 +105,10 @@ export const portfolio: PortfolioConfig = {
   },
 
   contact: {
-    email: 'massk0170@gmail.com',
+    email: 'kimmass124@gmail.com',
     phone: '',
     whatsapp: '243978956023',
-    formEndpoint: 'https://formsubmit.co/ajax/massk0170@gmail.com',
+    formEndpoint: 'https://sendm8.com/f/kimmass124@gmail.com',
   },
 
   projects: {
