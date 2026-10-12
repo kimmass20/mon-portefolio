@@ -1,6 +1,6 @@
 import type { IconDefinition } from '@fortawesome/free-brands-svg-icons'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp'
-import { Mail, Phone, Send, type LucideIcon } from 'lucide-react'
+import { Phone, Send, type LucideIcon } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { phoneHref, portfolio, whatsappHref } from '../config/portfolio'
 import { Button } from '../components/ui/Button'
@@ -72,38 +72,22 @@ export function Contact() {
     icon: LucideIcon | IconDefinition
     brand: boolean
   }[] = [
-    {
-      href: contact.email
-        ? `mailto:${contact.email}?subject=${encodeURIComponent('Contact portfolio Kim Mass')}`
-        : '',
-      label: contact.email,
-      icon: Mail,
-      external: false,
-      brand: false,
-    },
     { href: phoneHref(contact.phone), label: contact.phone, icon: Phone, external: false, brand: false },
     { href: whatsappHref(contact.whatsapp), label: 'WhatsApp', icon: faWhatsapp, external: true, brand: true },
   ].filter((link) => link.href.trim())
 
-  const recipient = contact.email.trim()
-  const canSend = Boolean(endpoint || recipient)
+  const canSend = Boolean(endpoint)
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     const nextErrors = validate(values)
     setErrors(nextErrors)
-    if (Object.keys(nextErrors).length > 0) return
+    if (Object.keys(nextErrors).length > 0 || !endpoint) return
 
-    if (!endpoint) {
-      if (!recipient) return
-      const body = `${values.message.trim()}\n\n${values.name.trim()}\n${values.email.trim()}`
-      window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(values.subject.trim())}&body=${encodeURIComponent(body)}`
-      setStatus('success')
-      setFeedback(
-        'Votre messagerie s’est ouverte avec le message prérempli. Il ne reste qu’à l’envoyer depuis celle-ci.',
-      )
-      return
-    }
+    const name = values.name.trim()
+    const email = values.email.trim()
+    const subject = values.subject.trim()
+    const message = values.message.trim()
 
     setStatus('loading')
     setFeedback('')
@@ -111,15 +95,25 @@ export function Contact() {
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ ...values, _subject: `Portfolio : ${values.subject.trim()}` }),
+        body: JSON.stringify({
+          name,
+          email,
+          subject,
+          message,
+          _replyto: email,
+          _subject: `Portfolio : ${subject}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
       })
-      if (!res.ok) throw new Error('HTTP error')
+      const data = (await res.json().catch(() => null)) as { success?: boolean | string } | null
+      if (!res.ok || data?.success === false || data?.success === 'false') throw new Error('HTTP error')
       setStatus('success')
-      setFeedback('Message envoyé. Merci — je vous répondrai dès que possible.')
+      setFeedback('Message envoyé. Il arrive directement dans ma boîte mail.')
       setValues({ name: '', email: '', subject: '', message: '' })
     } catch {
       setStatus('error')
-      setFeedback('Échec de l\'envoi. Réessayez ou utilisez les liens directs ci-dessous.')
+      setFeedback('Échec de l’envoi. Réessayez dans un instant.')
     }
   }
 
@@ -267,9 +261,9 @@ export function Contact() {
                 <Send size={16} aria-hidden />
                 {status === 'loading' ? 'Envoi…' : 'Envoyer le message'}
               </Button>
-              {!endpoint && recipient ? (
+              {endpoint ? (
                 <p className="mt-3 text-[15px] italic text-muted">
-                  Le message s&apos;ouvrira dans votre messagerie, prêt à être envoyé à {recipient}.
+                  Le message est envoyé directement dans ma boîte mail, sans ouvrir la vôtre.
                 </p>
               ) : null}
               {!canSend ? (
