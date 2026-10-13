@@ -3,6 +3,8 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp'
 import { Phone, Send, type LucideIcon } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { phoneHref, portfolio, whatsappHref } from '../config/portfolio'
+import { AnimatePresence, motion } from 'motion/react'
+import { Reveal } from '../components/motion/Reveal'
 import { Button } from '../components/ui/Button'
 import { SectionHeading } from '../components/ui/SectionHeading'
 import { BrandIcon, SocialLinks } from '../components/ui/SocialLinks'
@@ -123,7 +125,7 @@ export function Contact() {
   }
 
   const inputClass =
-    'mt-2 w-full rounded-none border-0 border-b border-text/30 bg-transparent px-0 py-3 font-sans text-[17px] text-text placeholder:text-muted/70 focus:border-accent focus:outline-none'
+    'mt-2 w-full rounded-none border-0 border-b border-text/30 bg-transparent px-0 py-3 font-sans text-[17px] text-text transition-colors duration-200 placeholder:text-muted/70 focus:border-accent focus:outline-none'
 
   return (
     <section id="contact" className="section border-t border-border">
@@ -135,7 +137,7 @@ export function Contact() {
         />
 
         <div className="stack-gap grid gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-4">
+          <Reveal className="lg:col-span-4">
             <p className="max-w-sm font-serif text-2xl italic leading-snug text-text">
               Ouvert aux collaborations sérieuses et aux problèmes intéressants.
             </p>
@@ -146,7 +148,7 @@ export function Contact() {
                   <a
                     href={link.href}
                     {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    className="inline-flex items-center gap-2.5 text-text hover:text-accent"
+                    className="inline-flex items-center gap-2.5 text-text transition-colors duration-200 hover:text-accent"
                   >
                     <ContactGlyph icon={link.icon} brand={link.brand} />
                     {link.label}
@@ -157,9 +159,9 @@ export function Contact() {
             <p className="mt-10 text-[17px] text-muted">
               Basé à Kinshasa, disponible à distance.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="lg:col-span-7 lg:col-start-6">
+          <Reveal delay={0.1} className="lg:col-span-7 lg:col-start-6">
             <form
               onSubmit={onSubmit}
               className="rounded-[4px] bg-surface p-6 sm:p-10"
@@ -248,14 +250,21 @@ export function Contact() {
                 </div>
               </div>
 
-              {feedback ? (
-                <p
-                  className={`mt-5 text-[16px] ${status === 'success' ? 'text-success' : 'text-danger'}`}
-                  role="status"
-                >
-                  {feedback}
-                </p>
-              ) : null}
+              <AnimatePresence mode="wait">
+                {feedback ? (
+                  <motion.p
+                    key={status}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.35 }}
+                    className={`mt-5 text-[16px] ${status === 'success' ? 'text-success' : 'text-danger'}`}
+                    role="status"
+                  >
+                    {feedback}
+                  </motion.p>
+                ) : null}
+              </AnimatePresence>
 
               <Button
                 type="submit"
@@ -277,7 +286,7 @@ export function Contact() {
                 </p>
               ) : null}
             </form>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -150,6 +150,35 @@ body {
   text-decoration-color: var(--color-accent);
 }
 
+.arrow-nudge {
+  animation: arrow-nudge 1.8s ease-in-out infinite;
+}
+
+@keyframes arrow-nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+.theme-swap {
+  animation: theme-swap 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes theme-swap {
+  from {
+    transform: rotate(-50deg) scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
 .string-draw {
   transform-box: view-box;
   transform-origin: 0 0;

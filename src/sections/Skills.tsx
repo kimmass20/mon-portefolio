@@ -3,6 +3,7 @@ import {
   skillLevelLabel,
   type SkillLevel,
 } from '../data/skills.config'
+import { Stagger, StaggerItem } from '../components/motion/Reveal'
 import { SectionHeading } from '../components/ui/SectionHeading'
 
 const levels: { id: SkillLevel; note: string }[] = [
@@ -31,7 +32,7 @@ export function Skills() {
         />
 
         <div className="stack-gap grid gap-10 md:grid-cols-3 md:gap-8 lg:gap-12">
-          {byLevel.map((level) => (
+          {byLevel.map((level, index) => (
             <section key={level.id} aria-labelledby={`level-${level.id}`}>
               <div className="border-b-2 border-text pb-4">
                 <h3
@@ -42,17 +43,18 @@ export function Skills() {
                 </h3>
                 <p className="mt-1 text-[16px] italic text-muted">{level.note}</p>
               </div>
-              <ul>
+              <Stagger as="ul" delay={index * 0.08} stagger={0.04}>
                 {level.items.map((item) => (
-                  <li
+                  <StaggerItem
                     key={item.name}
+                    as="li"
                     className="grid gap-0.5 border-b border-border py-3.5"
                   >
                     <span className="font-sans text-[17px] font-medium text-text">{item.name}</span>
                     <span className="text-[14px] italic text-muted">{item.category}</span>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </Stagger>
             </section>
           ))}
         </div>

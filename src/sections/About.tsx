@@ -1,5 +1,6 @@
 import { portfolio } from '../config/portfolio'
 import { ProfilePhoto } from '../components/media/ProfilePhoto'
+import { Reveal, Stagger, StaggerItem } from '../components/motion/Reveal'
 
 const principles = [
   {
@@ -20,7 +21,7 @@ export function About() {
   return (
     <section id="a-propos" className="section border-t border-border">
       <div className="page-shell grid gap-12 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-7">
+        <Reveal className="lg:col-span-7">
           <p className="mb-6 font-serif text-xl italic text-accent">À propos</p>
           <h2 className="display-balance font-serif text-[clamp(1.85rem,3.5vw,2.85rem)] font-normal leading-[1.15] tracking-[-0.01em] text-text">
             Je ne cherche pas à collectionner les technologies. Je cherche à comprendre ce
@@ -44,23 +45,23 @@ export function About() {
               d&apos;exploration progressifs, pas des expertises que je prétends déjà maîtriser.
             </p>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="lg:col-span-4 lg:col-start-9">
+        <Reveal delay={0.12} className="lg:col-span-4 lg:col-start-9">
           <ProfilePhoto className="mb-10 max-w-[22rem] sm:max-w-[18rem] lg:max-w-none" />
-          <dl>
+          <Stagger as="dl" stagger={0.09}>
             {principles.map((p) => (
-              <div key={p.title} className="border-t border-border py-6">
+              <StaggerItem key={p.title} className="border-t border-border py-6">
                 <dt className="font-display text-xl font-semibold tracking-[-0.015em] text-text">
                   {p.title}
                 </dt>
                 <dd className="body-pretty mt-2 text-[17px] leading-relaxed text-muted">
                   {p.body}
                 </dd>
-              </div>
+              </StaggerItem>
             ))}
-          </dl>
-        </div>
+          </Stagger>
+        </Reveal>
       </div>
     </section>
   )

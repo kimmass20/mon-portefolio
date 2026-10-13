@@ -30,7 +30,7 @@ export function MediaFrame({
 
   return (
     <div
-      className={cn('relative overflow-hidden rounded-[4px] border border-border bg-surface', className)}
+      className={cn('group relative overflow-hidden rounded-[4px] border border-border bg-surface', className)}
       style={{ aspectRatio: ratio }}
     >
       {showImage && image ? (
@@ -47,7 +47,7 @@ export function MediaFrame({
             onFail?.(image.src)
           }}
           className={cn(
-            'absolute inset-0 h-full w-full',
+            'absolute inset-0 h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.035]',
             image.fit === 'contain' ? 'object-contain' : 'object-cover object-top',
           )}
         />

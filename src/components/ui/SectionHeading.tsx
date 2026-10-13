@@ -1,3 +1,4 @@
+import { Reveal } from '../motion/Reveal'
 import { cn } from '../../lib/cn'
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
 
 export function SectionHeading({ label, title, description, className, id }: Props) {
   return (
-    <header className={cn('max-w-3xl', className)}>
+    <Reveal as="header" className={cn('max-w-3xl', className)}>
       {label ? (
         <p className="mb-4 font-serif text-xl italic text-accent">{label}</p>
       ) : null}
@@ -23,6 +24,6 @@ export function SectionHeading({ label, title, description, className, id }: Pro
       {description ? (
         <p className="body-pretty mt-5 max-w-xl text-lg leading-relaxed text-muted">{description}</p>
       ) : null}
-    </header>
+    </Reveal>
   )
 }

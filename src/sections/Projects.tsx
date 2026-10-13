@@ -2,6 +2,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { projects, type Project } from '../data/projects.data'
 import { cn } from '../lib/cn'
 import { ProjectGallery } from '../components/media/ProjectGallery'
+import { Reveal, Stagger, StaggerItem } from '../components/motion/Reveal'
 import { SectionHeading } from '../components/ui/SectionHeading'
 
 const statusDot: Record<Project['status'], string> = {
@@ -113,7 +114,7 @@ export function Projects() {
           description="Deux plateformes scolaires, une cloche connectée, deux projets académiques et une vitrine en ligne, dont deux projets de la start-up Espoir Compagnie auxquels j’ai contribué côté front-end. Chacun est présenté tel qu’il est aujourd’hui, avec ma part exacte du travail."
         />
 
-        <article className="stack-gap" aria-labelledby={`project-${featured.id}`}>
+        <Reveal as="article" className="stack-gap" aria-labelledby={`project-${featured.id}`}>
           <ProjectGallery project={featured} />
           <div className="mt-10 grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
@@ -123,16 +124,17 @@ export function Projects() {
               <Credits project={featured} />
             </div>
           </div>
-        </article>
+        </Reveal>
 
-        <div className="mt-[clamp(3.25rem,6vw,4.5rem)] grid gap-16 border-t-2 border-text pt-[clamp(2.5rem,4vw,3.25rem)] lg:grid-cols-2 lg:gap-x-12 lg:gap-y-16">
+        <Stagger className="mt-[clamp(3.25rem,6vw,4.5rem)] grid gap-16 border-t-2 border-text pt-[clamp(2.5rem,4vw,3.25rem)] lg:grid-cols-2 lg:gap-x-12 lg:gap-y-16" stagger={0.1}>
           {others.map((project, index) => {
             const spansRow = others.length % 2 === 1 && index === others.length - 1
 
             if (spansRow) {
               return (
-                <article
+                <StaggerItem
                   key={project.id}
+                  as="article"
                   aria-labelledby={`project-${project.id}`}
                   className="grid gap-10 border-t border-border pt-14 lg:col-span-2 lg:grid-cols-12 lg:gap-14"
                 >
@@ -143,19 +145,19 @@ export function Projects() {
                       <Credits project={project} />
                     </div>
                   </div>
-                </article>
+                </StaggerItem>
               )
             }
 
             return (
-              <article key={project.id} aria-labelledby={`project-${project.id}`}>
+              <StaggerItem key={project.id} as="article" aria-labelledby={`project-${project.id}`}>
                 <ProjectTitle project={project} />
                 <ProjectGallery project={project} className="my-8" />
                 <Credits project={project} />
-              </article>
+              </StaggerItem>
             )
           })}
-        </div>
+        </Stagger>
       </div>
     </section>
   )

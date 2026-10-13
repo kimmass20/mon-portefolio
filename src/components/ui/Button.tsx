@@ -28,7 +28,7 @@ export function Button({
   ...props
 }: ButtonProps | AnchorButtonProps) {
   const classes = cn(
-    'inline-flex min-h-11 items-center justify-center gap-2 rounded-[5px] px-5 py-2.5 font-sans text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-200 disabled:pointer-events-none disabled:opacity-45',
+    'inline-flex min-h-11 items-center justify-center gap-2 rounded-[5px] px-5 py-2.5 font-sans text-[15px] font-semibold tracking-[-0.01em] transition-[color,background-color,border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0 disabled:pointer-events-none disabled:translate-y-0 disabled:opacity-45',
     variants[variant],
     className,
   )

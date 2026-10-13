@@ -1,4 +1,5 @@
 import { Menu, X } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useEffect, useState } from 'react'
 import { scrollToSection } from '../../lib/scrollTo'
 import { cn } from '../../lib/cn'
@@ -17,6 +18,7 @@ const links = [
 
 export function Header() {
   const active = useActiveSection()
+  const reduced = useReducedMotion()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -43,7 +45,12 @@ export function Header() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-bg/92 pt-[env(safe-area-inset-top,0px)] backdrop-blur-md">
+    <motion.header
+      className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-bg/92 pt-[env(safe-area-inset-top,0px)] backdrop-blur-md"
+      initial={reduced ? false : { y: -18, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="page-shell grid h-[var(--header-h)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
         <Logo onClick={() => go('accueil')} />
 
@@ -55,10 +62,10 @@ export function Header() {
               onClick={() => go(link.id)}
               aria-current={active === link.id ? 'true' : undefined}
               className={cn(
-                'relative rounded-[5px] px-2.5 py-2 font-sans text-[14.5px] font-medium transition-colors xl:px-3 xl:text-[15px]',
+                'relative rounded-[5px] px-2.5 py-2 font-sans text-[14.5px] font-medium transition-colors after:absolute after:inset-x-2.5 after:bottom-1 after:h-px after:origin-left after:bg-accent after:transition-transform after:duration-300 xl:px-3 xl:text-[15px] xl:after:inset-x-3',
                 active === link.id
-                  ? 'text-text after:absolute after:inset-x-2.5 after:bottom-1 after:h-px after:bg-accent xl:after:inset-x-3'
-                  : 'text-muted hover:text-text',
+                  ? 'text-text after:scale-x-100'
+                  : 'text-muted after:scale-x-0 hover:text-text hover:after:scale-x-100',
               )}
             >
               {link.label}
@@ -81,36 +88,48 @@ export function Header() {
         </div>
       </div>
 
-      {open ? (
-        <nav
-          id="mobile-nav"
-          className="max-h-[calc(100dvh-var(--header-h)-env(safe-area-inset-top,0px))] overflow-y-auto border-t border-border bg-bg lg:hidden"
-          aria-label="Mobile"
-        >
-          <ul className="page-shell flex flex-col py-2 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))]">
-            {links.map((link) => (
-              <li key={link.id} className="border-b border-border/70">
-                <button
-                  type="button"
-                  onClick={() => go(link.id)}
-                  aria-current={active === link.id ? 'true' : undefined}
-                  className={cn(
-                    'flex min-h-14 w-full items-center text-left font-display text-[1.65rem] font-semibold tracking-[-0.02em]',
-                    active === link.id ? 'text-accent' : 'text-text',
-                  )}
+      <AnimatePresence>
+        {open ? (
+          <motion.nav
+            id="mobile-nav"
+            className="max-h-[calc(100dvh-var(--header-h)-env(safe-area-inset-top,0px))] overflow-hidden border-t border-border bg-bg lg:hidden"
+            aria-label="Mobile"
+            initial={reduced ? false : { height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={reduced ? undefined : { height: 0, opacity: 0 }}
+            transition={{ duration: reduced ? 0 : 0.38, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <ul className="page-shell flex flex-col overflow-y-auto py-2 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))]">
+              {links.map((link, index) => (
+                <motion.li
+                  key={link.id}
+                  className="border-b border-border/70"
+                  initial={reduced ? false : { opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: reduced ? 0 : 0.05 + index * 0.04, duration: 0.3 }}
                 >
-                  {link.label}
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => go(link.id)}
+                    aria-current={active === link.id ? 'true' : undefined}
+                    className={cn(
+                      'flex min-h-14 w-full items-center text-left font-display text-[1.65rem] font-semibold tracking-[-0.02em]',
+                      active === link.id ? 'text-accent' : 'text-text',
+                    )}
+                  >
+                    {link.label}
+                  </button>
+                </motion.li>
+              ))}
+              <li className="pt-5">
+                <Button variant="primary" className="w-full" onClick={() => go('contact')}>
+                  Discutons d&apos;un projet
+                </Button>
               </li>
-            ))}
-            <li className="pt-5">
-              <Button variant="primary" className="w-full" onClick={() => go('contact')}>
-                Discutons d&apos;un projet
-              </Button>
-            </li>
-          </ul>
-        </nav>
-      ) : null}
-    </header>
+            </ul>
+          </motion.nav>
+        ) : null}
+      </AnimatePresence>
+    </motion.header>
   )
 }
