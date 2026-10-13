@@ -79,8 +79,8 @@ export function Projects() {
       <div className="page-shell">
         <SectionHeading
           label="Projets"
-          title="Six projets, du site vitrine à l’objet connecté."
-          description="Le résumé tient sur la carte. Le contexte, ma part et les captures s’ouvrent ensuite."
+          title="Apprendre en construisant."
+          description="Chaque projet part d’une idée ou d’un besoin : faciliter la gestion d’une école, automatiser une sonnerie, organiser les échanges universitaires ou créer une vitrine pour une marque. C’est en développant ces solutions que je mets mes connaissances en pratique."
         />
 
         <div className="stack-gap grid gap-x-10 gap-y-14 md:grid-cols-2">
