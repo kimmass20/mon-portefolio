@@ -6,24 +6,41 @@ export function useActiveSection() {
   const [active, setActive] = useState('accueil')
 
   useEffect(() => {
-    const elements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean) as HTMLElement[]
+    let frame = 0
 
-    if (!elements.length) return
+    const update = () => {
+      frame = 0
+      const bar = document.querySelector('[data-header-bar]')
+      const line = (bar?.getBoundingClientRect().bottom ?? 0) + 12
+      const nearBottom =
+        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8
+      let current = sectionIds[0]
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-        if (visible?.target.id) setActive(visible.target.id)
-      },
-      { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5] },
-    )
+      if (nearBottom) {
+        current = 'contact'
+      } else {
+        for (const id of sectionIds) {
+          const el = document.getElementById(id)
+          if (el && el.getBoundingClientRect().top <= line) current = id
+        }
+      }
 
-    elements.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
+      setActive((prev) => (prev === current ? prev : current))
+    }
+
+    const onScroll = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [])
 
   return active
