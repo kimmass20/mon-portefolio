@@ -20,11 +20,11 @@ const tags = {
 type Tag = keyof typeof tags
 
 const item = {
-  hidden: { opacity: 0, y: 52 },
+  hidden: { opacity: 0, y: 22 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.85, ease },
+    transition: { duration: 0.65, ease },
   },
 }
 
@@ -50,7 +50,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
-  y = 72,
+  y = 28,
   as = 'div',
   ...rest
 }: Common & { delay?: number; y?: number }) {
@@ -63,7 +63,7 @@ export function Reveal({
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '0px 0px -6% 0px' }}
-      transition={{ duration: 0.95, delay, ease }}
+      transition={{ duration: 0.72, delay, ease }}
       {...rest}
     >
       {children}
@@ -85,9 +85,9 @@ export function Rise({
   return (
     <Comp
       className={className}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 22 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.9, delay, ease }}
+      transition={{ duration: 0.7, delay, ease }}
       {...rest}
     >
       {children}
@@ -112,7 +112,7 @@ export function RiseWord({
         className="inline-block"
         initial={{ y: '130%' }}
         animate={{ y: '0%' }}
-        transition={{ duration: 1.15, delay, ease }}
+        transition={{ duration: 0.9, delay, ease }}
       >
         {children}
       </motion.span>

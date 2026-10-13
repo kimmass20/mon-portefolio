@@ -23,6 +23,7 @@ export function Strings() {
   const edgeRefs = useRef<(SVGPathElement | null)[]>([])
   const vibrations = useRef<(Vibration | null)[]>(TUNING.map(() => null))
   const frame = useRef<number | null>(null)
+  const visible = useRef(true)
 
   const tick = (now: number) => {
     const seconds = now / 1000
@@ -55,32 +56,47 @@ export function Strings() {
   }
 
   const tickRef = useRef(tick)
-  tickRef.current = tick
+
+  useEffect(() => {
+    tickRef.current = tick
+  })
 
   useEffect(() => {
     if (reduced) return
     let alive = true
     const loop = (now: number) => {
       if (!alive) return
-      if (document.hidden) {
+      if (document.hidden || !visible.current) {
         frame.current = null
         return
       }
       tickRef.current(now)
       frame.current = requestAnimationFrame(loop)
     }
-    const onVis = () => {
-      if (!document.hidden && frame.current === null && alive) {
+    const resume = () => {
+      if (!document.hidden && visible.current && frame.current === null && alive) {
         frame.current = requestAnimationFrame(loop)
       }
     }
+    const node = svgRef.current
+    const observer = node
+      ? new IntersectionObserver(
+          ([entry]) => {
+            visible.current = entry.isIntersecting
+            resume()
+          },
+          { rootMargin: '120px' },
+        )
+      : null
+    if (node && observer) observer.observe(node)
     frame.current = requestAnimationFrame(loop)
-    document.addEventListener('visibilitychange', onVis)
+    document.addEventListener('visibilitychange', resume)
     return () => {
       alive = false
       if (frame.current !== null) cancelAnimationFrame(frame.current)
       frame.current = null
-      document.removeEventListener('visibilitychange', onVis)
+      observer?.disconnect()
+      document.removeEventListener('visibilitychange', resume)
     }
   }, [reduced])
 

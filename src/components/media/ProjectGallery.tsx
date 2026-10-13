@@ -63,7 +63,7 @@ export function ProjectGallery({ project, className }: { project: Project; class
               aria-pressed={i === index}
               aria-label={`Afficher la capture ${i + 1} sur ${images.length}`}
               className={cn(
-                'w-20 overflow-hidden rounded-[3px] border-2 transition-colors sm:w-24',
+                'min-h-11 w-24 overflow-hidden rounded-[3px] border-2 transition-colors sm:w-28',
                 i === index ? 'border-accent' : 'border-transparent opacity-70 hover:opacity-100',
               )}
             >
@@ -74,7 +74,7 @@ export function ProjectGallery({ project, className }: { project: Project; class
                 height={90}
                 loading="lazy"
                 onError={() => onFail(image.src)}
-                className="block aspect-video bg-surface w-full object-cover object-top"
+                className="block aspect-video w-full bg-surface object-contain"
               />
             </button>
           ))}

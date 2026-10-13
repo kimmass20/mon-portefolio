@@ -48,11 +48,11 @@ export function MediaFrame({
             setFailedSrc(image.src)
             onFail?.(image.src)
           }}
-          initial={reduced ? false : { scale: 1.14 }}
+          initial={reduced ? false : { scale: 1.04 }}
           whileInView={{ scale: 1 }}
-          whileHover={reduced ? undefined : { scale: 1.06, transition: { duration: 0.45 } }}
+          whileHover={reduced ? undefined : { scale: 1.025, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } }}
           viewport={{ once: true, margin: '0px 0px -8% 0px' }}
-          transition={{ duration: 1.15, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
             'absolute inset-0 h-full w-full',
             image.fit === 'contain' ? 'object-contain' : 'object-cover object-top',
