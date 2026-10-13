@@ -104,8 +104,6 @@ export function Contact() {
           message,
           _replyto: email,
           _subject: `Portfolio : ${subject}`,
-          _template: 'table',
-          _captcha: 'false',
         }),
       })
       const data = (await res.json().catch(() => null)) as {
