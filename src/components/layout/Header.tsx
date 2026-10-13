@@ -47,9 +47,9 @@ export function Header() {
   return (
     <motion.header
       className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-bg/92 pt-[env(safe-area-inset-top,0px)] backdrop-blur-md"
-      initial={reduced ? false : { y: -18, opacity: 0 }}
+      initial={reduced ? false : { y: -72, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="page-shell grid h-[var(--header-h)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
         <Logo onClick={() => go('accueil')} />
@@ -104,7 +104,7 @@ export function Header() {
                 <motion.li
                   key={link.id}
                   className="border-b border-border/70"
-                  initial={reduced ? false : { opacity: 0, x: -10 }}
+                  initial={reduced ? false : { opacity: 0, x: -28 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: reduced ? 0 : 0.05 + index * 0.04, duration: 0.3 }}
                 >

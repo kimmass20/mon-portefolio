@@ -26,14 +26,14 @@ export function Hero() {
             <RiseWord className="block sm:inline-block" delay={0.08}>
               Kim
             </RiseWord>{' '}
-            <RiseWord className="block sm:ml-[0.08em] sm:inline-block" delay={0.2}>
+            <RiseWord className="block sm:ml-[0.08em] sm:inline-block" delay={0.28}>
               Mass
             </RiseWord>
           </h1>
         </div>
       </div>
 
-      <Rise delay={0.34} className="page-shell stack-gap grid gap-8 md:grid-cols-12 md:items-end">
+      <Rise delay={0.5} className="page-shell stack-gap grid gap-8 md:grid-cols-12 md:items-end">
         <p className="body-pretty text-[1.4rem] leading-[1.35] text-text sm:text-[1.65rem] md:col-span-7">
           Étudiant en informatique à l&apos;UPC, je construis des sites et des applications web
           pour des besoins concrets, de la vitrine e-commerce à la gestion scolaire.

@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react'
 import type { ReactNode } from 'react'
 
-const ease = [0.22, 1, 0.36, 1] as const
+const ease = [0.16, 1, 0.3, 1] as const
 
 const tags = {
   div: motion.div,
@@ -20,11 +20,11 @@ const tags = {
 type Tag = keyof typeof tags
 
 const item = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: { opacity: 0, y: 52 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease },
+    transition: { duration: 0.85, ease },
   },
 }
 
@@ -50,7 +50,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
-  y = 22,
+  y = 72,
   as = 'div',
   ...rest
 }: Common & { delay?: number; y?: number }) {
@@ -62,8 +62,8 @@ export function Reveal({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px 0px -12% 0px' }}
-      transition={{ duration: 0.7, delay, ease }}
+      viewport={{ once: true, margin: '0px 0px -6% 0px' }}
+      transition={{ duration: 0.95, delay, ease }}
       {...rest}
     >
       {children}
@@ -85,9 +85,9 @@ export function Rise({
   return (
     <Comp
       className={className}
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay, ease }}
+      transition={{ duration: 0.9, delay, ease }}
       {...rest}
     >
       {children}
@@ -110,9 +110,9 @@ export function RiseWord({
     <span className={`overflow-hidden pb-[0.08em] ${className ?? ''}`}>
       <motion.span
         className="inline-block"
-        initial={{ y: '112%' }}
+        initial={{ y: '130%' }}
         animate={{ y: '0%' }}
-        transition={{ duration: 0.9, delay, ease }}
+        transition={{ duration: 1.15, delay, ease }}
       >
         {children}
       </motion.span>
@@ -124,7 +124,7 @@ export function Stagger({
   children,
   className,
   delay = 0,
-  stagger = 0.07,
+  stagger = 0.12,
   as = 'div',
   ...rest
 }: Common & { delay?: number; stagger?: number }) {

@@ -24,12 +24,6 @@ export function Strings() {
   const vibrations = useRef<(Vibration | null)[]>(TUNING.map(() => null))
   const frame = useRef<number | null>(null)
 
-  useEffect(() => {
-    return () => {
-      if (frame.current !== null) cancelAnimationFrame(frame.current)
-    }
-  }, [])
-
   const tick = (now: number) => {
     let running = false
     vibrations.current.forEach((v, i) => {
@@ -56,6 +50,31 @@ export function Strings() {
     })
     frame.current = running ? requestAnimationFrame(tick) : null
   }
+
+  const tickRef = useRef(tick)
+  tickRef.current = tick
+
+  useEffect(() => {
+    return () => {
+      if (frame.current !== null) cancelAnimationFrame(frame.current)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (reduced) return
+    const timers = TUNING.map((_, i) =>
+      window.setTimeout(() => {
+        vibrations.current[i] = {
+          start: performance.now(),
+          amp: (i % 2 === 0 ? 1 : -1) * (34 - i * 2),
+          x: 180 + i * 110,
+          freq: 5.5 - i * 0.25,
+        }
+        if (frame.current === null) frame.current = requestAnimationFrame((now) => tickRef.current(now))
+      }, 700 + i * 170),
+    )
+    return () => timers.forEach((timer) => window.clearTimeout(timer))
+  }, [reduced])
 
   const pluck = (i: number, e: PointerEvent<SVGPathElement>) => {
     if (reduced || !svgRef.current) return
@@ -95,12 +114,12 @@ export function Strings() {
               strokeLinecap="round"
               vectorEffect="non-scaling-stroke"
               className="string-draw"
-              style={{ animationDelay: `${i * 70}ms` }}
-            />
-            <path
-              ref={(el) => {
-                pathRefs.current[i] = el
-              }}
+                style={{ animationDelay: `${i * 140}ms` }}
+              />
+              <path
+                ref={(el) => {
+                  pathRefs.current[i] = el
+                }}
               d={flatPath(y)}
               fill="none"
               stroke={wound ? 'var(--color-brass)' : 'var(--color-text)'}
@@ -108,7 +127,7 @@ export function Strings() {
               strokeLinecap="round"
               vectorEffect="non-scaling-stroke"
               className="string-draw"
-              style={{ animationDelay: `${i * 70}ms` }}
+                style={{ animationDelay: `${i * 140}ms` }}
             />
             <path
               d={flatPath(y)}

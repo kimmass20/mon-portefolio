@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from 'motion/react'
 import { useState, type ReactNode } from 'react'
 import { assetUrl, type ImageAsset } from '../../config/portfolio'
 import { cn } from '../../lib/cn'
@@ -25,6 +26,7 @@ export function MediaFrame({
   eager,
   onFail,
 }: Props) {
+  const reduced = useReducedMotion()
   const [failedSrc, setFailedSrc] = useState<string | null>(null)
   const showImage = Boolean(image?.src) && failedSrc !== image?.src
 
@@ -34,7 +36,7 @@ export function MediaFrame({
       style={{ aspectRatio: ratio }}
     >
       {showImage && image ? (
-        <img
+        <motion.img
           key={image.src}
           src={assetUrl(image.src)}
           alt={image.alt}
@@ -46,8 +48,13 @@ export function MediaFrame({
             setFailedSrc(image.src)
             onFail?.(image.src)
           }}
+          initial={reduced ? false : { scale: 1.14 }}
+          whileInView={{ scale: 1 }}
+          whileHover={reduced ? undefined : { scale: 1.06, transition: { duration: 0.45 } }}
+          viewport={{ once: true, margin: '0px 0px -8% 0px' }}
+          transition={{ duration: 1.15, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            'absolute inset-0 h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.035]',
+            'absolute inset-0 h-full w-full',
             image.fit === 'contain' ? 'object-contain' : 'object-cover object-top',
           )}
         />

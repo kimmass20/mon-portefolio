@@ -42,7 +42,7 @@ export function SocialLinks({ size = 'md', className }: { size?: 'sm' | 'md'; cl
             aria-label={`${link.label} (nouvel onglet)`}
             title={link.label}
             className={cn(
-              'inline-flex items-center justify-center rounded-full border border-border text-muted transition-[color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus-visible:border-accent focus-visible:text-accent',
+              'inline-flex items-center justify-center rounded-full border border-border text-muted transition-[color,border-color,transform] duration-300 hover:-translate-y-1 hover:scale-110 hover:border-accent hover:text-accent focus-visible:border-accent focus-visible:text-accent',
               size === 'md' ? 'h-12 w-12 text-[20px]' : 'h-11 w-11 text-[17px]',
             )}
           >
