@@ -25,40 +25,64 @@ export function Strings() {
   const frame = useRef<number | null>(null)
 
   const tick = (now: number) => {
-    let running = false
-    vibrations.current.forEach((v, i) => {
+    const seconds = now / 1000
+    TUNING.forEach((_, i) => {
       const path = pathRefs.current[i]
       const edge = edgeRefs.current[i]
-      if (!v || !path || !edge) return
-      const t = (now - v.start) / 1000
-      const decay = Math.exp(-t * 3.2)
+      if (!path || !edge) return
       const y = stringY(i)
-      if (decay < 0.02) {
-        const d = flatPath(y)
-        path.setAttribute('d', d)
-        edge.setAttribute('d', d)
-        path.style.stroke = ''
-        vibrations.current[i] = null
-        return
+      const idle =
+        Math.sin(seconds * (0.7 + i * 0.06) * Math.PI * 2 + i * 0.9) * (28 + i * 2.2)
+      let offset = idle
+      let accent = false
+      const pluckState = vibrations.current[i]
+      if (pluckState) {
+        const t = (now - pluckState.start) / 1000
+        const decay = Math.exp(-t * 2.6)
+        if (decay < 0.02) {
+          vibrations.current[i] = null
+        } else {
+          offset += pluckState.amp * decay * Math.sin(2 * Math.PI * pluckState.freq * t)
+          accent = decay > 0.25
+        }
       }
-      running = true
-      const offset = v.amp * decay * Math.sin(2 * Math.PI * v.freq * t)
-      const d = `M0 ${y} Q${v.x} ${y + offset * 2} ${WIDTH} ${y}`
+      const crest = 140 + (Math.sin(seconds * 0.32 + i * 0.7) * 0.5 + 0.5) * 720
+      const d = `M0 ${y} Q${crest} ${y + offset * 2} ${WIDTH} ${y}`
       path.setAttribute('d', d)
       edge.setAttribute('d', d)
-      path.style.stroke = decay > 0.25 ? 'var(--color-accent)' : ''
+      path.style.stroke = accent ? 'var(--color-accent)' : ''
     })
-    frame.current = running ? requestAnimationFrame(tick) : null
   }
 
   const tickRef = useRef(tick)
   tickRef.current = tick
 
   useEffect(() => {
-    return () => {
-      if (frame.current !== null) cancelAnimationFrame(frame.current)
+    if (reduced) return
+    let alive = true
+    const loop = (now: number) => {
+      if (!alive) return
+      if (document.hidden) {
+        frame.current = null
+        return
+      }
+      tickRef.current(now)
+      frame.current = requestAnimationFrame(loop)
     }
-  }, [])
+    const onVis = () => {
+      if (!document.hidden && frame.current === null && alive) {
+        frame.current = requestAnimationFrame(loop)
+      }
+    }
+    frame.current = requestAnimationFrame(loop)
+    document.addEventListener('visibilitychange', onVis)
+    return () => {
+      alive = false
+      if (frame.current !== null) cancelAnimationFrame(frame.current)
+      frame.current = null
+      document.removeEventListener('visibilitychange', onVis)
+    }
+  }, [reduced])
 
   useEffect(() => {
     if (reduced) return
@@ -70,7 +94,6 @@ export function Strings() {
           x: 180 + i * 110,
           freq: 5.5 - i * 0.25,
         }
-        if (frame.current === null) frame.current = requestAnimationFrame((now) => tickRef.current(now))
       }, 700 + i * 170),
     )
     return () => timers.forEach((timer) => window.clearTimeout(timer))
@@ -87,7 +110,6 @@ export function Strings() {
       x: Math.min(Math.max(x, 80), WIDTH - 80),
       freq: 11 - i * 1.1,
     }
-    if (frame.current === null) frame.current = requestAnimationFrame(tick)
   }
 
   return (
