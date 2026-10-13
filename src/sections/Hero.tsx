@@ -14,9 +14,9 @@ export function Hero() {
     target: sectionRef,
     offset: ['start start', 'end start'],
   })
-  const stringsY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 70])
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 120])
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 40])
+  const stringsY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 28])
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 48])
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 16])
 
   return (
     <section
@@ -26,8 +26,8 @@ export function Hero() {
     >
       <Rise className="page-shell flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 font-sans text-[15px] text-muted">
         <p>
-          <span className="font-semibold text-text">{portfolio.identity.fullName}</span>, développeur web
-          à Kinshasa
+          <span className="font-semibold text-text">{portfolio.identity.fullName}</span>, étudiant en
+          informatique et développeur web à Kinshasa
         </p>
         <p>{portfolio.identity.level}, UPC</p>
       </Rise>
@@ -51,15 +51,27 @@ export function Hero() {
       <motion.div style={{ y: copyY }}>
         <Rise delay={0.5} className="page-shell stack-gap grid gap-8 md:grid-cols-12 md:items-end">
           <p className="body-pretty text-[1.4rem] leading-[1.35] text-text sm:text-[1.65rem] md:col-span-7">
-            Étudiant en informatique à l&apos;UPC, je construis des sites et des applications web
-            pour des besoins concrets, de la vitrine e-commerce à la gestion scolaire.
+            Je conçois des sites et des applications web pour répondre à des besoins concrets, de la
+            vitrine e-commerce aux solutions numériques pour l&apos;éducation.
           </p>
           <div className="flex flex-wrap gap-3 md:col-span-5 md:justify-end">
-            <Button variant="primary" onClick={() => scrollToSection('projets')}>
-              Voir les projets
+            <Button
+              variant="primary"
+              onPointerDown={(event) => {
+                if (event.pointerType !== 'touch') event.preventDefault()
+              }}
+              onClick={() => scrollToSection('projets')}
+            >
+              Découvrir mes projets
               <ArrowDown size={17} aria-hidden className="arrow-nudge" />
             </Button>
-            <Button variant="secondary" onClick={() => scrollToSection('contact')}>
+            <Button
+              variant="secondary"
+              onPointerDown={(event) => {
+                if (event.pointerType !== 'touch') event.preventDefault()
+              }}
+              onClick={() => scrollToSection('contact')}
+            >
               Me contacter
             </Button>
           </div>

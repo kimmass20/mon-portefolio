@@ -125,23 +125,20 @@ export function Contact() {
   }
 
   const inputClass =
-    'mt-2 w-full rounded-none border-0 border-b border-text/30 bg-transparent px-0 py-3 font-sans text-[17px] text-text transition-colors duration-200 placeholder:text-muted/70 focus:border-accent focus:outline-none'
+    'mt-2 min-h-11 w-full rounded-none border-0 border-b border-text/30 bg-transparent px-0 py-3 font-sans text-[17px] text-text transition-colors duration-200 placeholder:text-muted/70 focus:border-accent focus:outline-none'
 
   return (
     <section id="contact" className="section border-t border-border">
       <div className="page-shell">
         <SectionHeading
           label="Contact"
-          title="Une idée en tête ? Faisons-la avancer."
-          description="Projet numérique, collaboration ou opportunité professionnelle : la conversation peut commencer ici."
+          title="Une idée, un projet ou une collaboration ?"
+          description="Parlons-en. Le message part dans ma boîte mail, ou directement sur WhatsApp."
         />
 
         <div className="stack-gap grid gap-12 lg:grid-cols-12 lg:gap-10">
           <Reveal className="lg:col-span-4">
-            <p className="max-w-sm font-serif text-2xl italic leading-snug text-text">
-              Ouvert aux collaborations sérieuses et aux problèmes intéressants.
-            </p>
-            <SocialLinks className="mt-8" />
+            <SocialLinks />
             <ul className="mt-6 space-y-4 font-sans text-[17px] font-medium empty:hidden">
               {contactLinks.map((link) => (
                 <li key={link.label}>
@@ -176,6 +173,8 @@ export function Contact() {
                     id="contact-name"
                     name="name"
                     autoComplete="name"
+                    required
+                    aria-required="true"
                     className={inputClass}
                     value={values.name}
                     onChange={(e) => setValues((v) => ({ ...v, name: e.target.value }))}
@@ -197,6 +196,8 @@ export function Contact() {
                     name="email"
                     type="email"
                     autoComplete="email"
+                    required
+                    aria-required="true"
                     className={inputClass}
                     value={values.email}
                     onChange={(e) => setValues((v) => ({ ...v, email: e.target.value }))}
@@ -216,6 +217,8 @@ export function Contact() {
                   <input
                     id="contact-subject"
                     name="subject"
+                    required
+                    aria-required="true"
                     className={inputClass}
                     value={values.subject}
                     onChange={(e) => setValues((v) => ({ ...v, subject: e.target.value }))}
@@ -236,6 +239,8 @@ export function Contact() {
                     id="contact-message"
                     name="message"
                     rows={5}
+                    required
+                    aria-required="true"
                     className={inputClass}
                     value={values.message}
                     onChange={(e) => setValues((v) => ({ ...v, message: e.target.value }))}

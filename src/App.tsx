@@ -3,7 +3,6 @@ import { Header } from './components/layout/Header'
 import { About } from './sections/About'
 import { Contact } from './sections/Contact'
 import { Hero } from './sections/Hero'
-import { Interests } from './sections/Interests'
 import { Journey } from './sections/Journey'
 import { Projects } from './sections/Projects'
 import { Skills } from './sections/Skills'
@@ -26,7 +25,6 @@ function App() {
         <Projects />
         <Journey />
         <Vision />
-        <Interests />
         <Contact />
       </main>
       <Footer />

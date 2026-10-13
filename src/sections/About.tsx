@@ -1,21 +1,7 @@
 import { portfolio } from '../config/portfolio'
 import { ProfilePhoto } from '../components/media/ProfilePhoto'
-import { Reveal, Stagger, StaggerItem } from '../components/motion/Reveal'
-
-const principles = [
-  {
-    title: 'Apprendre en pratiquant',
-    body: 'Je consolide mes bases en codant des interfaces et des applications, pas seulement en suivant des cours.',
-  },
-  {
-    title: 'Construire des solutions utiles',
-    body: "Chaque projet part d'un besoin concret : présenter une offre, organiser des données, faciliter un échange.",
-  },
-  {
-    title: 'Évoluer grâce aux projets',
-    body: 'Les retours, les contraintes techniques et les itérations guident ma progression.',
-  },
-]
+import { Reveal } from '../components/motion/Reveal'
+import { Disclosure } from '../components/ui/Disclosure'
 
 export function About() {
   return (
@@ -27,40 +13,37 @@ export function About() {
             Je ne cherche pas à collectionner les technologies. Je cherche à comprendre ce
             qu&apos;elles permettent de créer.
           </h2>
-          <div className="mt-10 max-w-2xl space-y-5 text-lg leading-[1.7] text-muted">
-            <p className="body-pretty">
-              Étudiant à l&apos;{portfolio.identity.university}, je développe mes compétences en
-              programmation à travers des vitrines web, des applications et des réflexions
-              produit. Chaque projet est un terrain d&apos;apprentissage : cadrer un besoin,
-              choisir une approche, construire, tester et améliorer.
-            </p>
-            <p className="body-pretty">
-              Je suis aussi développeur chez {portfolio.identity.startup}, une start-up
-              pour laquelle j&apos;ai contribué au front-end de projets comme Scolaris et Smart
-              Bell.
-            </p>
-            <p className="body-pretty">
-              Mon parcours réunit le développement web, la création de solutions et une
-              sensibilité entrepreneuriale. L&apos;IA et la Data Science constituent des axes
-              d&apos;exploration progressifs, pas des expertises que je prétends déjà maîtriser.
-            </p>
-          </div>
+          <p className="body-pretty mt-8 max-w-2xl text-lg leading-[1.7] text-muted">
+            Étudiant en informatique à l&apos;{portfolio.identity.university}, j&apos;apprends en
+            construisant des projets utiles, pas seulement en suivant des cours.
+          </p>
+          <Disclosure openLabel="En savoir plus sur mon parcours" className="mt-6">
+            <div className="grid max-w-2xl gap-6 text-[17px] leading-relaxed text-muted">
+              <p className="body-pretty">
+                À la {portfolio.identity.faculty}, je suis en {portfolio.identity.level}.
+                Le parcours mêle programmation, bases de données et applications, avec des projets
+                menés en parallèle.
+              </p>
+              <p className="body-pretty">
+                Devant un besoin, je commence par le cadrer. Ensuite je choisis une approche, je
+                développe, je teste et je reviens sur ce qui coince.
+              </p>
+              <p className="body-pretty">
+                Certains projets sont personnels, d&apos;autres académiques, d&apos;autres menés en
+                équipe. Chez {portfolio.identity.startup}, j&apos;ai contribué au front-end de
+                Scolaris et de Smart Bell, sans porter seul ces plateformes.
+              </p>
+              <p className="body-pretty">
+                La création de produits et l&apos;entrepreneuriat m&apos;intéressent. L&apos;IA
+                appliquée au développement et la Data Science sont des pistes que je veux
+                approfondir, pas des domaines que je présente comme acquis.
+              </p>
+            </div>
+          </Disclosure>
         </Reveal>
 
         <Reveal delay={0.12} className="lg:col-span-4 lg:col-start-9">
-          <ProfilePhoto className="mb-10 max-w-[22rem] sm:max-w-[18rem] lg:max-w-none" />
-          <Stagger as="dl" stagger={0.09}>
-            {principles.map((p) => (
-              <StaggerItem key={p.title} className="border-t border-border py-6">
-                <dt className="font-display text-xl font-semibold tracking-[-0.015em] text-text">
-                  {p.title}
-                </dt>
-                <dd className="body-pretty mt-2 text-[17px] leading-relaxed text-muted">
-                  {p.body}
-                </dd>
-              </StaggerItem>
-            ))}
-          </Stagger>
+          <ProfilePhoto className="max-w-[22rem] sm:max-w-[18rem] lg:max-w-none" />
         </Reveal>
       </div>
     </section>

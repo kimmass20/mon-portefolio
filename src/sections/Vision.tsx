@@ -1,19 +1,5 @@
-import { Reveal, Stagger, StaggerItem } from '../components/motion/Reveal'
-
-const pillars = [
-  {
-    title: 'Comprendre les usages',
-    text: "Observer les besoins réels avant de choisir une stack, surtout dans des contextes où l'accès et les habitudes diffèrent.",
-  },
-  {
-    title: 'Produits & IA',
-    text: "Explorer comment l'IA peut accélérer le développement et enrichir des produits, de manière pragmatique et responsable.",
-  },
-  {
-    title: 'Valeur durable',
-    text: 'Apprendre par la réalisation de projets concrets, avec une attention particulière aux opportunités locales et africaines.',
-  },
-]
+import { Reveal } from '../components/motion/Reveal'
+import { Disclosure } from '../components/ui/Disclosure'
 
 export function Vision() {
   return (
@@ -25,25 +11,30 @@ export function Vision() {
             id="vision-title"
             className="display-balance max-w-5xl font-serif text-[clamp(2rem,4.2vw,3.5rem)] font-normal leading-[1.12] tracking-[-0.015em] text-text"
           >
-            La technologie n&apos;a de valeur que lorsqu&apos;elle répond à quelque chose.
+            La technologie n&apos;a de valeur que lorsqu&apos;elle répond à un besoin réel.
           </h2>
-        </Reveal>
-
-        <Stagger className="stack-gap grid gap-8 md:grid-cols-3 md:gap-8" stagger={0.1}>
-          {pillars.map((p) => (
-            <StaggerItem key={p.title} className="border-t border-border pt-6">
-              <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] text-text">
-                {p.title}
-              </h3>
-              <p className="body-pretty mt-3 text-[17px] leading-relaxed text-muted">{p.text}</p>
-            </StaggerItem>
-          ))}
-        </Stagger>
-
-        <Reveal className="body-pretty stack-gap max-w-2xl border-l-2 border-brass pl-6 text-lg italic leading-[1.7] text-muted" as="p">
-          La Data Science et l&apos;analyse de données font partie de mes objectifs
-          d&apos;évolution : mieux exploiter les données pour éclairer des décisions produit, une
-          fois les bases statistiques et les outils consolidés dans mon parcours.
+          <p className="body-pretty mt-6 max-w-2xl text-lg leading-[1.7] text-muted">
+            Je préfère comprendre le problème avant de choisir un outil, puis construire quelque
+            chose d&apos;utile avec.
+          </p>
+          <Disclosure openLabel="En savoir plus" className="mt-6">
+            <div className="grid max-w-2xl gap-5 text-[17px] leading-relaxed text-muted">
+              <p className="body-pretty">
+                La création de produits numériques et l&apos;entrepreneuriat font partie de ce que
+                je veux apprendre à tenir, y compris à partir de contextes locaux et africains.
+              </p>
+              <p className="body-pretty">
+                L&apos;IA appliquée au développement m&apos;intéresse comme un moyen d&apos;aller
+                plus vite sur un produit, pas comme une expertise déjà acquise. La Data Science et
+                l&apos;analyse de données suivent le même chemin : je veux les approfondir une fois
+                les bases mieux en place.
+              </p>
+              <p className="body-pretty">
+                En dehors du code, la musique et la guitare restent un repère. Elles sont aussi la
+                raison des cordes derrière le nom.
+              </p>
+            </div>
+          </Disclosure>
         </Reveal>
       </div>
     </section>
