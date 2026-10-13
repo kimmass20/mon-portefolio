@@ -1,16 +1,19 @@
+import type { PointerEvent as ReactPointerEvent } from 'react'
 import { portfolio } from '../../config/portfolio'
 import { cn } from '../../lib/cn'
 
 type Props = {
   className?: string
   onClick?: () => void
+  onPointerDown?: (event: ReactPointerEvent<HTMLButtonElement>) => void
 }
 
-export function Logo({ className, onClick }: Props) {
+export function Logo({ className, onClick, onPointerDown }: Props) {
   return (
     <button
       type="button"
       onClick={onClick}
+      onPointerDown={onPointerDown}
       className={cn('group flex items-center gap-2.5 text-left', className)}
       aria-label={`${portfolio.identity.brandName}, retour à l'accueil`}
     >

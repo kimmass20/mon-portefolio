@@ -40,6 +40,11 @@ export function Header() {
     }
   }, [open])
 
+  const arm = (event: { preventDefault: () => void; pointerType?: string }) => {
+    if (event.pointerType !== 'touch') event.preventDefault()
+    document.body.style.overflow = ''
+  }
+
   const go = (id: string) => {
     document.body.style.overflow = ''
     setOpen(false)
@@ -55,7 +60,7 @@ export function Header() {
     >
       <div className="relative">
         <div data-header-bar className="page-shell flex h-[var(--header-h)] items-center">
-          <Logo onClick={() => go('accueil')} />
+          <Logo onClick={() => go('accueil')} onPointerDown={arm} />
 
           <nav
             className="ml-auto hidden items-center gap-x-8 lg:flex xl:gap-x-11"
@@ -67,6 +72,7 @@ export function Header() {
                 <button
                   key={link.id}
                   type="button"
+                  onPointerDown={arm}
                   onClick={() => go(link.id)}
                   aria-current={current ? 'true' : undefined}
                   className={cn(
@@ -137,6 +143,7 @@ export function Header() {
                 >
                   <button
                     type="button"
+                    onPointerDown={arm}
                     onClick={() => go(link.id)}
                     aria-current={active === link.id ? 'true' : undefined}
                     className={cn(
@@ -149,7 +156,7 @@ export function Header() {
                 </motion.li>
               ))}
               <li className="pt-5">
-                <Button variant="primary" className="w-full" onClick={() => go('contact')}>
+                <Button variant="primary" className="w-full" onPointerDown={arm} onClick={() => go('contact')}>
                   Discutons d&apos;un projet
                 </Button>
               </li>
