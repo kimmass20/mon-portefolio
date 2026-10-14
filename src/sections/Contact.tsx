@@ -78,7 +78,7 @@ export function Contact() {
     { href: whatsappHref(contact.whatsapp), label: 'WhatsApp', icon: faWhatsapp, external: true, brand: true },
   ].filter((link) => link.href.trim())
 
-  const canSend = Boolean(endpoint)
+  const canSend = Boolean(endpoint && portfolio.contact.accessKey)
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
@@ -98,21 +98,23 @@ export function Contact() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
+          access_key: portfolio.contact.accessKey,
           name,
           email,
-          subject,
           message,
-          _replyto: email,
-          _subject: `Portfolio : ${subject}`,
+          subject: `Portfolio : ${subject}`,
+          from_name: 'Kim Mass',
+          replyto: email,
         }),
       })
       const data = (await res.json().catch(() => null)) as {
-        success?: boolean | string
-        ok?: boolean
+        success?: boolean
+        message?: string
+        body?: { message?: string }
       } | null
-      const accepted = data?.ok === true || data?.success === true || data?.success === 'true'
-      const rejected = data?.ok === false || data?.success === false || data?.success === 'false'
-      if (!res.ok || rejected || !accepted) throw new Error('HTTP error')
+      if (!res.ok || data?.success !== true) {
+        throw new Error(data?.message || data?.body?.message || 'HTTP error')
+      }
       setStatus('success')
       setFeedback('Message envoyé. Il arrive directement dans ma boîte mail.')
       setValues({ name: '', email: '', subject: '', message: '' })

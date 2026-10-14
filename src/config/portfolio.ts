@@ -72,10 +72,12 @@ type PortfolioConfig = {
     /** Numéro international sans '+' ni espaces, ex. '243900000000'. */
     whatsapp: string
     /**
-     * Adresse du formulaire Formspree, ex. 'https://formspree.io/f/abcdwxyz'.
+     * Adresse du service qui reçoit le formulaire.
      * Remplie : le formulaire envoie directement. Vide : il ouvre la messagerie du visiteur.
      */
     formEndpoint: string
+    /** Clé publique Web3Forms. Elle désigne la boîte de réception, ce n'est pas un secret. */
+    accessKey: string
   }
   projects: Record<ProjectId, ProjectMedia>
 }
@@ -108,7 +110,8 @@ export const portfolio: PortfolioConfig = {
     email: 'massk0170@gmail.com',
     phone: '',
     whatsapp: '243978956023',
-    formEndpoint: 'https://sendm8.com/f/massk0170%2Bfolio@gmail.com',
+    formEndpoint: 'https://api.web3forms.com/submit',
+    accessKey: '0312d3e8-c16c-4ad9-b424-c3c213dc41cc',
   },
 
   projects: {
